@@ -2,6 +2,12 @@ package contributors
 
 val testRequestData = RequestData("username", "password", "org")
 
+/**
+ * We use virtual time for testing, which will return results immediately and add the delay to the time as to not
+ * take forever to run tests
+ *
+ * To use virtual time, replace runBlocking with runTest
+ */
 data class TestRepo(val name: String, val delay: Long, val users: List<User>)
 
 data class TestResults(val timeFromStart: Long, val users: List<User>)
@@ -67,8 +73,10 @@ val concurrentProgressResults = listOf(
     ),
     TestResults(
         2000, // 1000 + max(800, 1000)
-        listOf(User(login = "user-2", contributions = 70), User(login = "user-3", contributions = 60),
-            User(login = "user-1", contributions = 10))
+        listOf(
+            User(login = "user-2", contributions = 70), User(login = "user-3", contributions = 60),
+            User(login = "user-1", contributions = 10)
+        )
     ),
     expectedConcurrentResults
 )
